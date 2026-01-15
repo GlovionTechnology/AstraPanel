@@ -22,6 +22,17 @@ db.serialize(() => {
         password TEXT
     )`);
 
+    // SITES Table Create karna
+    db.run(`CREATE TABLE IF NOT EXISTS sites (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        domain_name TEXT UNIQUE,
+        port INTEGER,
+        php_version TEXT,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    )`);
+    
+    console.log("✅ Sites Table Ready");
+
     // Default Admin Check
     const checkAdmin = "SELECT * FROM users WHERE username = ?";
     db.get(checkAdmin, ['admin'], (err, row) => {

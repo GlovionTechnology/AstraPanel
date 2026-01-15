@@ -4,6 +4,7 @@ const cors = require('cors');
 // Import Routes
 const authRoutes = require('./routes/authRoutes');
 const systemRoutes = require('./routes/systemRoutes');
+const siteRoutes = require('./routes/siteRoutes'); // Import
 
 const app = express();
 const PORT = 3000;
@@ -15,6 +16,7 @@ app.use(express.json());
 // Add prefix to keep URLs clean
 app.use('/api/auth', authRoutes);      // For login: /api/auth/login
 app.use('/api/system', systemRoutes);  // For stats: /api/system/stats
+app.use('/api/sites', siteRoutes);     // For sites: /api/sites/create, /api/sites/list
 
 // Basic Test Route
 app.get('/', (req, res) => {
