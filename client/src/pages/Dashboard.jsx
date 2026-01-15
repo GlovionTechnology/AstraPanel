@@ -1,6 +1,6 @@
 import { useSystemStats } from '../hooks/useSystemStats';
 import Layout from '../components/Layout';
-import { Activity, Server, HardDrive, Cpu, TrendingUp, Zap, Database, Clock } from 'lucide-react';
+import { Activity, Server, HardDrive, Cpu, TrendingUp, Zap, Database, Clock, Monitor, Cloud, MapPin, Globe, BarChart3 } from 'lucide-react';
 
 const Dashboard = () => {
     const { data, isLoading, isError } = useSystemStats();
@@ -49,6 +49,57 @@ const Dashboard = () => {
                                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                                 <span className="text-white font-medium">All Systems Operational</span>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* System Information Grid */}
+                <div className="glass-effect rounded-xl p-6">
+                    <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                        <Monitor className="text-brand-400" size={20} />
+                        System Information
+                    </h3>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700/50">
+                            <h4 className="text-xs font-semibold text-gray-400 mb-2">Operating System</h4>
+                            <p className="text-white font-medium">Ubuntu 22.04</p>
+                        </div>
+                        <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700/50">
+                            <h4 className="text-xs font-semibold text-gray-400 mb-2">Hostname</h4>
+                            <p className="text-white font-medium font-mono text-sm">astrapanel-server</p>
+                        </div>
+                        <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700/50">
+                            <h4 className="text-xs font-semibold text-gray-400 mb-2">CPU</h4>
+                            <p className="text-white font-medium">2 Cores</p>
+                        </div>
+                        <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700/50">
+                            <h4 className="text-xs font-semibold text-gray-400 mb-2">Memory</h4>
+                            <p className="text-white font-medium">{data.ram_total}</p>
+                        </div>
+                        <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700/50">
+                            <h4 className="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1">
+                                <Cloud size={12} />
+                                Cloud
+                            </h4>
+                            <p className="text-white font-medium">AWS</p>
+                        </div>
+                        <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700/50">
+                            <h4 className="text-xs font-semibold text-gray-400 mb-2">Instance ID</h4>
+                            <p className="text-white font-medium font-mono text-sm">i-0123456789</p>
+                        </div>
+                        <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700/50">
+                            <h4 className="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1">
+                                <MapPin size={12} />
+                                Region
+                            </h4>
+                            <p className="text-white font-medium">us-east-1</p>
+                        </div>
+                        <div className="bg-slate-800/30 rounded-lg p-4 border border-slate-700/50">
+                            <h4 className="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1">
+                                <Globe size={12} />
+                                IPv4 Public IP
+                            </h4>
+                            <p className="text-white font-medium font-mono text-sm">192.168.1.1</p>
                         </div>
                     </div>
                 </div>
@@ -127,6 +178,86 @@ const Dashboard = () => {
                         <div className="mt-3 flex items-center gap-1 text-xs text-gray-400">
                             <Clock size={14} className="text-purple-400" />
                             <span>Uptime: {data.uptime}</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Monitoring Section */}
+                <div className="glass-effect rounded-xl overflow-hidden">
+                    <div className="border-b border-slate-700 px-6 py-4 flex justify-between items-center">
+                        <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                            <BarChart3 className="text-brand-400" size={20} />
+                            Monitoring
+                        </h3>
+                        <select className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:ring-2 focus:ring-brand-500">
+                            <option value="30">Last 30 Minutes</option>
+                            <option value="60">Last Hour</option>
+                            <option value="180">Last 3 Hours</option>
+                            <option value="360">Last 6 Hours</option>
+                            <option value="720">Last 12 Hours</option>
+                        </select>
+                    </div>
+                    <div className="p-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            {/* CPU Usage Chart */}
+                            <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h4 className="text-sm font-semibold text-white">CPU Usage</h4>
+                                    <span className="text-xs text-gray-400">2 CPU</span>
+                                </div>
+                                <div className="h-48 flex items-center justify-center bg-slate-900/50 rounded-lg border border-slate-700/30">
+                                    <div className="text-center">
+                                        <Activity className="mx-auto mb-2 text-brand-400" size={32} />
+                                        <p className="text-sm text-gray-400">Chart visualization</p>
+                                        <p className="text-xs text-gray-500 mt-1">Real-time CPU monitoring</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Memory Usage Chart */}
+                            <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h4 className="text-sm font-semibold text-white">Memory Usage</h4>
+                                    <span className="text-xs text-gray-400">{data.ram_total}</span>
+                                </div>
+                                <div className="h-48 flex items-center justify-center bg-slate-900/50 rounded-lg border border-slate-700/30">
+                                    <div className="text-center">
+                                        <Database className="mx-auto mb-2 text-green-400" size={32} />
+                                        <p className="text-sm text-gray-400">Chart visualization</p>
+                                        <p className="text-xs text-gray-500 mt-1">Real-time memory monitoring</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Disk Usage Chart */}
+                            <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h4 className="text-sm font-semibold text-white">Disk Usage</h4>
+                                    <span className="text-xs text-gray-400">/ (40 GB)</span>
+                                </div>
+                                <div className="h-48 flex items-center justify-center bg-slate-900/50 rounded-lg border border-slate-700/30">
+                                    <div className="text-center">
+                                        <HardDrive className="mx-auto mb-2 text-orange-400" size={32} />
+                                        <p className="text-sm text-gray-400">Chart visualization</p>
+                                        <p className="text-xs text-gray-500 mt-1">Storage usage trends</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Load Average Chart */}
+                            <div className="bg-slate-800/30 rounded-xl p-4 border border-slate-700/50">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h4 className="text-sm font-semibold text-white">Load Average</h4>
+                                    <span className="text-xs text-gray-400">2 CPU</span>
+                                </div>
+                                <div className="h-48 flex items-center justify-center bg-slate-900/50 rounded-lg border border-slate-700/30">
+                                    <div className="text-center">
+                                        <TrendingUp className="mx-auto mb-2 text-purple-400" size={32} />
+                                        <p className="text-sm text-gray-400">Chart visualization</p>
+                                        <p className="text-xs text-gray-500 mt-1">1min, 5min, 15min averages</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

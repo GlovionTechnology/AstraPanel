@@ -1,5 +1,5 @@
 import Layout from '../components/Layout';
-import { Globe, Plus, Server, Calendar, Code, Trash2, AlertCircle, Loader2 } from 'lucide-react';
+import { Globe, Plus, Server, Calendar, Code, Settings, AlertCircle, Loader2 } from 'lucide-react';
 import { useSites } from '../hooks/useSites';
 import { useNavigate } from 'react-router-dom';
 
@@ -130,9 +130,12 @@ const Sites = () => {
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 text-right">
-                                                <button className="inline-flex items-center gap-2 px-3 py-2 text-red-400 hover:bg-red-900/20 rounded-lg transition-all">
-                                                    <Trash2 size={16} />
-                                                    <span className="text-sm">Delete</span>
+                                                <button 
+                                                    onClick={() => navigate(`/sites/${site.domain_name}/manage`)}
+                                                    className="inline-flex items-center gap-2 px-4 py-2 text-brand-400 hover:bg-brand-900/20 rounded-lg transition-all border border-brand-500/20 hover:border-brand-500/40"
+                                                >
+                                                    <Settings size={16} />
+                                                    <span className="text-sm font-medium">Manage</span>
                                                 </button>
                                             </td>
                                         </tr>
