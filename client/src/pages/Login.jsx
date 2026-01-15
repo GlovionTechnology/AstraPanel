@@ -33,21 +33,21 @@ const Login = () => {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen bg-slate-900 text-white">
-            <div className="w-full max-w-md p-8 space-y-6 bg-slate-800 rounded-xl shadow-2xl border border-slate-700">
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+            <div className="w-full max-w-md p-8 space-y-6 glass-effect rounded-2xl shadow-2xl">
                 
                 {/* Logo Section */}
                 <div className="flex flex-col items-center">
-                    <div className="p-3 bg-indigo-600 rounded-full">
+                    <div className="p-3 bg-gradient-to-br from-brand-400 to-brand-600 rounded-xl shadow-lg shadow-brand-500/30">
                         <Server size={32} />
                     </div>
-                    <h1 className="mt-3 text-2xl font-bold">AstraPanel</h1>
-                    <p className="text-slate-400 text-sm">Secure Hosting Control Panel</p>
+                    <h1 className="mt-3 text-2xl font-bold text-white">AstraPanel</h1>
+                    <p className="text-gray-400 text-sm">Secure Hosting Control Panel</p>
                 </div>
 
                 {/* Error Message */}
                 {error && (
-                    <div className="p-3 text-sm text-red-200 bg-red-900/50 border border-red-500 rounded">
+                    <div className="p-3 text-sm text-red-200 bg-red-900/30 border border-red-500/50 rounded-lg">
                         {error}
                     </div>
                 )}
@@ -57,11 +57,11 @@ const Login = () => {
                     
                     {/* Username Input */}
                     <div className="relative">
-                        <User className="absolute left-3 top-3 text-slate-400" size={20} />
+                        <User className="absolute left-3 top-3 text-gray-400" size={20} />
                         <input 
                             type="text" 
                             placeholder="Username" 
-                            className="w-full p-2.5 pl-10 bg-slate-900 border border-slate-700 rounded focus:outline-none focus:border-indigo-500 text-white"
+                            className="w-full p-2.5 pl-10 bg-slate-900 border border-slate-700 rounded-lg focus:outline-none focus:border-brand-500 text-white placeholder-gray-500 transition-colors"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                         />
@@ -69,11 +69,11 @@ const Login = () => {
 
                     {/* Password Input */}
                     <div className="relative">
-                        <Lock className="absolute left-3 top-3 text-slate-400" size={20} />
+                        <Lock className="absolute left-3 top-3 text-gray-400" size={20} />
                         <input 
                             type="password" 
                             placeholder="Password" 
-                            className="w-full p-2.5 pl-10 bg-slate-900 border border-slate-700 rounded focus:outline-none focus:border-indigo-500 text-white"
+                            className="w-full p-2.5 pl-10 bg-slate-900 border border-slate-700 rounded-lg focus:outline-none focus:border-brand-500 text-white placeholder-gray-500 transition-colors"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
@@ -81,7 +81,7 @@ const Login = () => {
 
                     <button 
                         type="submit" 
-                        className="w-full py-3 font-bold text-white transition bg-indigo-600 rounded hover:bg-indigo-700"
+                        className="w-full py-3 font-bold text-white bg-gradient-to-r from-brand-500 to-brand-600 rounded-lg hover:from-brand-600 hover:to-brand-700 transition-all shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50"
                     >
                         Access Control Panel
                     </button>

@@ -27,9 +27,22 @@ db.serialize(() => {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         domain_name TEXT UNIQUE,
         port INTEGER,
-        php_version TEXT,
+        app_type TEXT DEFAULT 'PHP',
+        version TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )`);
+    
+    // Migration: Add columns if they don't exist (for existing databases)
+    db.run(`ALTER TABLE sites ADD COLUMN app_type TEXT DEFAULT 'PHP'`, (err) => {
+        if (err && !err.message.includes('duplicate column')) {
+            console.error('Migration error (app_type):', err.message);
+        }
+    });
+    db.run(`ALTER TABLE sites ADD COLUMN version TEXT`, (err) => {
+        if (err && !err.message.includes('duplicate column')) {
+            console.error('Migration error (version):', err.message);
+        }
+    });
     
     console.log("✅ Sites Table Ready");
 

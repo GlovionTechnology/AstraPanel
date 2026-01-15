@@ -23,15 +23,15 @@ const Layout = ({ children }) => {
     return (
         <div className="flex h-screen bg-slate-950">
             {/* Sidebar - Desktop */}
-            <aside className="hidden lg:flex lg:flex-col lg:w-64 bg-slate-900 border-r border-slate-800">
+            <aside className="hidden lg:flex lg:flex-col lg:w-64 bg-slate-900 border-r border-slate-800/50 shadow-2xl">
                 {/* Logo */}
-                <div className="flex items-center gap-3 px-6 py-5 border-b border-slate-800">
-                    <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg">
+                <div className="flex items-center gap-3 px-6 py-5 border-b border-slate-800/50">
+                    <div className="p-2 bg-gradient-to-br from-brand-400 to-brand-600 rounded-lg shadow-lg shadow-brand-500/30">
                         <Server size={24} className="text-white" />
                     </div>
                     <div>
                         <h1 className="text-xl font-bold text-white">AstraPanel</h1>
-                        <p className="text-xs text-slate-400">Control Panel</p>
+                        <p className="text-xs text-gray-400">Control Panel</p>
                     </div>
                 </div>
 
@@ -43,8 +43,8 @@ const Layout = ({ children }) => {
                             to={item.path}
                             className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                                 isActive(item.path)
-                                    ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/50'
-                                    : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                                    ? 'bg-gradient-to-r from-brand-500 to-brand-600 text-white shadow-lg shadow-brand-500/30'
+                                    : 'text-gray-400 hover:bg-slate-800/50 hover:text-white'
                             }`}
                         >
                             <item.icon size={20} />
@@ -54,10 +54,10 @@ const Layout = ({ children }) => {
                 </nav>
 
                 {/* Logout Button */}
-                <div className="px-4 py-4 border-t border-slate-800">
+                <div className="px-4 py-4 border-t border-slate-800/50">
                     <button
                         onClick={handleLogout}
-                        className="flex items-center gap-3 w-full px-4 py-3 text-red-400 hover:bg-red-950 hover:text-red-300 rounded-lg transition-all"
+                        className="flex items-center gap-3 w-full px-4 py-3 text-red-400 hover:bg-red-900/20 hover:text-red-300 rounded-lg transition-all"
                     >
                         <LogOut size={20} />
                         <span className="font-medium">Logout</span>
@@ -68,16 +68,16 @@ const Layout = ({ children }) => {
             {/* Mobile Sidebar */}
             {sidebarOpen && (
                 <div className="lg:hidden fixed inset-0 z-50 bg-black/50" onClick={() => setSidebarOpen(false)}>
-                    <aside className="w-64 h-full bg-slate-900 border-r border-slate-800" onClick={(e) => e.stopPropagation()}>
-                        <div className="flex items-center justify-between px-6 py-5 border-b border-slate-800">
+                    <aside className="w-64 h-full bg-slate-900 border-r border-slate-800/50" onClick={(e) => e.stopPropagation()}>
+                        <div className="flex items-center justify-between px-6 py-5 border-b border-slate-800/50">
                             <div className="flex items-center gap-3">
-                                <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg">
+                                <div className="p-2 bg-gradient-to-br from-brand-400 to-brand-600 rounded-lg">
                                     <Server size={24} className="text-white" />
                                 </div>
                                 <h1 className="text-xl font-bold text-white">AstraPanel</h1>
                             </div>
                             <button onClick={() => setSidebarOpen(false)}>
-                                <X size={24} className="text-slate-400" />
+                                <X size={24} className="text-gray-400" />
                             </button>
                         </div>
 
@@ -89,8 +89,8 @@ const Layout = ({ children }) => {
                                     onClick={() => setSidebarOpen(false)}
                                     className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                                         isActive(item.path)
-                                            ? 'bg-indigo-600 text-white'
-                                            : 'text-slate-400 hover:bg-slate-800 hover:text-white'
+                                            ? 'bg-gradient-to-r from-brand-500 to-brand-600 text-white'
+                                            : 'text-gray-400 hover:bg-slate-800/50 hover:text-white'
                                     }`}
                                 >
                                     <item.icon size={20} />
@@ -105,12 +105,12 @@ const Layout = ({ children }) => {
             {/* Main Content */}
             <div className="flex-1 flex flex-col overflow-hidden">
                 {/* Top Navbar */}
-                <header className="bg-slate-900 border-b border-slate-800 px-6 py-4">
+                <header className="glass-effect px-6 py-4">
                     <div className="flex items-center justify-between">
                         {/* Mobile Menu Button */}
                         <button
                             onClick={() => setSidebarOpen(true)}
-                            className="lg:hidden text-slate-400 hover:text-white"
+                            className="lg:hidden text-gray-400 hover:text-white"
                         >
                             <Menu size={24} />
                         </button>
@@ -124,9 +124,9 @@ const Layout = ({ children }) => {
                         <div className="flex items-center gap-3">
                             <div className="text-right hidden sm:block">
                                 <p className="text-sm font-medium text-white">Administrator</p>
-                                <p className="text-xs text-slate-400">admin@astrapanel.com</p>
+                                <p className="text-xs text-gray-400">admin@astrapanel.com</p>
                             </div>
-                            <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+                            <div className="w-10 h-10 bg-gradient-to-br from-brand-400 to-brand-600 rounded-full flex items-center justify-center text-white font-bold shadow-lg shadow-brand-500/30">
                                 A
                             </div>
                         </div>
