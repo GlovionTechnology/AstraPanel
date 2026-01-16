@@ -12,6 +12,7 @@ const CreateSite = () => {
     const [formData, setFormData] = useState({
         domain_name: '',
         app_type: getAppTypeFromId(siteType),
+        php_application: 'Generic', // For PHP sites
         version: getDefaultVersion(siteType),
         app_port: getDefaultPort(siteType),
         proxy_url: '',
@@ -75,6 +76,7 @@ const CreateSite = () => {
             await createSite.mutateAsync({
                 domain_name: formData.domain_name,
                 app_type: formData.app_type,
+                php_application: formData.php_application, // Include PHP application type
                 version: formData.version,
                 app_port: formData.app_port,
                 proxy_url: formData.proxy_url,
@@ -121,6 +123,43 @@ const CreateSite = () => {
 
                     {/* Form */}
                     <form onSubmit={handleSubmit} className="space-y-5">
+                        {/* PHP Application Type */}
+                        {formData.app_type === 'PHP' && (
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">
+                                    Application
+                                </label>
+                                <select
+                                    value={formData.php_application}
+                                    onChange={(e) => setFormData({ ...formData, php_application: e.target.value })}
+                                    className="w-full px-4 py-3 pr-10 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all"
+                                >
+                                    <option value="Generic">Generic</option>
+                                    <option value="CakePHP">CakePHP</option>
+                                    <option value="CodeIgniter">CodeIgniter</option>
+                                    <option value="Contao">Contao</option>
+                                    <option value="Drupal 10">Drupal 10</option>
+                                    <option value="Drupal 11">Drupal 11</option>
+                                    <option value="FuelPHP">FuelPHP</option>
+                                    <option value="Joomla">Joomla</option>
+                                    <option value="Laminas">Laminas</option>
+                                    <option value="Laravel 11">Laravel 11</option>
+                                    <option value="Laravel 12">Laravel 12</option>
+                                    <option value="Magento">Magento</option>
+                                    <option value="Moodle">Moodle</option>
+                                    <option value="OpenCart">OpenCart</option>
+                                    <option value="Phalcon">Phalcon</option>
+                                    <option value="PHPixie">PHPixie</option>
+                                    <option value="PrestaShop">PrestaShop</option>
+                                    <option value="Slim Framework">Slim Framework</option>
+                                    <option value="Symfony 6">Symfony 6</option>
+                                    <option value="Symfony 7">Symfony 7</option>
+                                    <option value="Yii">Yii</option>
+                                    <option value="Zend Framework">Zend Framework</option>
+                                </select>
+                            </div>
+                        )}
+
                         {/* Domain Name */}
                         <div>
                             <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -162,7 +201,7 @@ const CreateSite = () => {
                                 <select
                                     value={formData.version}
                                     onChange={(e) => setFormData({ ...formData, version: e.target.value })}
-                                    className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all"
+                                    className="w-full px-4 py-3 pr-10 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all"
                                 >
                                     <option value="7.4">PHP 7.4</option>
                                     <option value="8.0">PHP 8.0</option>
@@ -182,7 +221,7 @@ const CreateSite = () => {
                                 <select
                                     value={formData.version}
                                     onChange={(e) => setFormData({ ...formData, version: e.target.value })}
-                                    className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all"
+                                    className="w-full px-4 py-3 pr-10 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all"
                                 >
                                     {formData.app_type === 'Node.js' && (
                                         <>
@@ -366,7 +405,7 @@ const CreateSite = () => {
                                     <select
                                         value={formData.multisite}
                                         onChange={(e) => setFormData({ ...formData, multisite: e.target.value })}
-                                        className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all"
+                                        className="w-full px-4 py-3 pr-10 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500 transition-all"
                                     >
                                         <option value="no">No</option>
                                         <option value="yes">Yes</option>

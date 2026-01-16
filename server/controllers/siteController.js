@@ -8,6 +8,7 @@ exports.createSite = async (req, res) => {
         domain_name, 
         port, 
         app_type, 
+        php_application, // Add PHP application type
         version, 
         app_port, 
         proxy_url, 
@@ -79,6 +80,7 @@ exports.createSite = async (req, res) => {
                 const siteInfo = {
                     domain_name,
                     app_type,
+                    php_application: php_application || 'Generic', // Store PHP application type
                     version,
                     port: port || 80,
                     app_port: app_port || null,

@@ -11,6 +11,16 @@ const SettingsTab = ({ domain }) => {
         sshKeys: '',
         appVersion: '8.3',
         appPort: '3000',
+        // PHP Settings
+        phpVersion: '8.2',
+        memoryLimit: '512 MB',
+        maxExecutionTime: '1m',
+        maxInputTime: '1m',
+        maxInputVars: '10000',
+        postMaxSize: '64 MB',
+        uploadMaxFilesize: '64 MB',
+        additionalConfig: `date.timezone=UTC;
+display_errors=off;`,
         pageSpeedSettings: `pagespeed RewriteLevel CoreFilters;
 pagespeed EnableFilters remove_quotes;
 pagespeed DisableFilters prioritize_critical_css;
@@ -229,22 +239,23 @@ location ~ "\\.pagespeed\\.([a-z]\\.)?[a-z]{2}\\.[^.]{10}\\.[^.]+" {
                 </form>
             </div>
 
-            {/* App Settings Card (Dynamic based on app type) */}
+            {/* PHP Settings Card */}
             <div className="glass-effect rounded-xl overflow-hidden">
                 <div className="border-b border-slate-700 px-6 py-4">
-                    <h3 className="text-lg font-semibold text-white">Application Settings</h3>
+                    <h3 className="text-lg font-semibold text-white">PHP Settings</h3>
                 </div>
-                <form onSubmit={handleSaveAppSettings} className="p-6">
+                <form onSubmit={handleSaveAppSettings} className="p-6 space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label className="block text-sm font-medium text-gray-300 mb-2">
-                                App Version
+                                PHP Version
                             </label>
                             <select
-                                value={formData.appVersion}
-                                onChange={(e) => setFormData({ ...formData, appVersion: e.target.value })}
-                                className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                                value={formData.phpVersion}
+                                onChange={(e) => setFormData({ ...formData, phpVersion: e.target.value })}
+                                className="w-full px-4 py-3 pr-10 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
                             >
+                                <option value="7.4">PHP 7.4</option>
                                 <option value="8.0">PHP 8.0</option>
                                 <option value="8.1">PHP 8.1</option>
                                 <option value="8.2">PHP 8.2</option>
@@ -254,18 +265,188 @@ location ~ "\\.pagespeed\\.([a-z]\\.)?[a-z]{2}\\.[^.]{10}\\.[^.]+" {
                         
                         <div>
                             <label className="block text-sm font-medium text-gray-300 mb-2">
-                                App Port
+                                memory_limit
                             </label>
-                            <input
-                                type="number"
-                                value={formData.appPort}
-                                onChange={(e) => setFormData({ ...formData, appPort: e.target.value })}
-                                className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
-                            />
+                            <select
+                                value={formData.memoryLimit}
+                                onChange={(e) => setFormData({ ...formData, memoryLimit: e.target.value })}
+                                className="w-full px-4 py-3 pr-10 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                            >
+                                <option value="64 MB">64 MB</option>
+                                <option value="128 MB">128 MB</option>
+                                <option value="512 MB">512 MB</option>
+                                <option value="768 MB">768 MB</option>
+                                <option value="1 GB">1 GB</option>
+                                <option value="2 GB">2 GB</option>
+                                <option value="3 GB">3 GB</option>
+                                <option value="4 GB">4 GB</option>
+                                <option value="5 GB">5 GB</option>
+                                <option value="6 GB">6 GB</option>
+                                <option value="7 GB">7 GB</option>
+                                <option value="8 GB">8 GB</option>
+                            </select>
+                            <p className="text-xs text-gray-500 mt-1">
+                                Sets the maximum amount of memory that a script is allowed to allocate.
+                            </p>
                         </div>
                     </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-300 mb-2">
+                                max_execution_time
+                            </label>
+                            <select
+                                value={formData.maxExecutionTime}
+                                onChange={(e) => setFormData({ ...formData, maxExecutionTime: e.target.value })}
+                                className="w-full px-4 py-3 pr-10 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                            >
+                                <option value="15s">15 sec</option>
+                                <option value="30s">30 sec</option>
+                                <option value="45s">45 sec</option>
+                                <option value="1m">1 min</option>
+                                <option value="2m">2 min</option>
+                                <option value="3m">3 min</option>
+                                <option value="4m">4 min</option>
+                                <option value="5m">5 min</option>
+                                <option value="10m">10 min</option>
+                                <option value="15m">15 min</option>
+                                <option value="30m">30 min</option>
+                                <option value="45m">45 min</option>
+                                <option value="1h">1 hour</option>
+                            </select>
+                            <p className="text-xs text-gray-500 mt-1">
+                                Sets the maximum time a script is allowed to run before it is terminated by the parser.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <label className="block text-sm font-medium text-gray-300 mb-2">
+                                max_input_time
+                            </label>
+                            <select
+                                value={formData.maxInputTime}
+                                onChange={(e) => setFormData({ ...formData, maxInputTime: e.target.value })}
+                                className="w-full px-4 py-3 pr-10 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                            >
+                                <option value="15s">15 sec</option>
+                                <option value="30s">30 sec</option>
+                                <option value="45s">45 sec</option>
+                                <option value="1m">1 min</option>
+                                <option value="2m">2 min</option>
+                                <option value="3m">3 min</option>
+                                <option value="4m">4 min</option>
+                                <option value="5m">5 min</option>
+                                <option value="10m">10 min</option>
+                                <option value="15m">15 min</option>
+                                <option value="30m">30 min</option>
+                                <option value="45m">45 min</option>
+                                <option value="1h">1 hour</option>
+                            </select>
+                            <p className="text-xs text-gray-500 mt-1">
+                                Sets the maximum time a script is allowed to parse input data, like POST and GET.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-300 mb-2">
+                                max_input_vars
+                            </label>
+                            <select
+                                value={formData.maxInputVars}
+                                onChange={(e) => setFormData({ ...formData, maxInputVars: e.target.value })}
+                                className="w-full px-4 py-3 pr-10 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                            >
+                                <option value="1000">1000</option>
+                                <option value="2000">2000</option>
+                                <option value="3000">3000</option>
+                                <option value="4000">4000</option>
+                                <option value="5000">5000</option>
+                                <option value="10000">10000</option>
+                                <option value="20000">20000</option>
+                                <option value="50000">50000</option>
+                                <option value="100000">100000</option>
+                            </select>
+                            <p className="text-xs text-gray-500 mt-1">
+                                Sets the limit of the number of inputs for posting forms.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <label className="block text-sm font-medium text-gray-300 mb-2">
+                                post_max_size
+                            </label>
+                            <select
+                                value={formData.postMaxSize}
+                                onChange={(e) => setFormData({ ...formData, postMaxSize: e.target.value })}
+                                className="w-full px-4 py-3 pr-10 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                            >
+                                <option value="2 MB">2 MB</option>
+                                <option value="4 MB">4 MB</option>
+                                <option value="8 MB">8 MB</option>
+                                <option value="16 MB">16 MB</option>
+                                <option value="32 MB">32 MB</option>
+                                <option value="64 MB">64 MB</option>
+                                <option value="128 MB">128 MB</option>
+                                <option value="256 MB">256 MB</option>
+                                <option value="512 MB">512 MB</option>
+                                <option value="1 GB">1 GB</option>
+                                <option value="2 GB">2 GB</option>
+                                <option value="3 GB">3 GB</option>
+                                <option value="4 GB">4 GB</option>
+                                <option value="5 GB">5 GB</option>
+                            </select>
+                            <p className="text-xs text-gray-500 mt-1">
+                                Maximum size of POST data that PHP will accept.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                            upload_max_filesize
+                        </label>
+                        <select
+                            value={formData.uploadMaxFilesize}
+                            onChange={(e) => setFormData({ ...formData, uploadMaxFilesize: e.target.value })}
+                            className="w-full md:max-w-md px-4 py-3 pr-10 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500"
+                        >
+                            <option value="2 MB">2 MB</option>
+                            <option value="4 MB">4 MB</option>
+                            <option value="8 MB">8 MB</option>
+                            <option value="16 MB">16 MB</option>
+                            <option value="32 MB">32 MB</option>
+                            <option value="64 MB">64 MB</option>
+                            <option value="128 MB">128 MB</option>
+                            <option value="256 MB">256 MB</option>
+                            <option value="512 MB">512 MB</option>
+                            <option value="1 GB">1 GB</option>
+                            <option value="2 GB">2 GB</option>
+                            <option value="3 GB">3 GB</option>
+                            <option value="4 GB">4 GB</option>
+                            <option value="5 GB">5 GB</option>
+                        </select>
+                        <p className="text-xs text-gray-500 mt-1">
+                            The maximum size of an uploaded file.
+                        </p>
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                            Additional Configuration Directives
+                        </label>
+                        <textarea
+                            value={formData.additionalConfig}
+                            onChange={(e) => setFormData({ ...formData, additionalConfig: e.target.value })}
+                            rows="4"
+                            className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-brand-500 font-mono text-sm"
+                            placeholder="date.timezone=UTC;&#10;display_errors=off;"
+                        />
+                    </div>
                     
-                    <div className="flex justify-end mt-6">
+                    <div className="flex justify-end">
                         <button
                             type="submit"
                             className="px-6 py-2.5 bg-brand-500 hover:bg-brand-600 text-white rounded-lg transition-all"
