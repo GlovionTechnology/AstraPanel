@@ -1,8 +1,10 @@
 import axios from 'axios';
 
-// 1. Base URL set karna (Baar baar localhost:3000 likhne ki zarurat nahi)
+// 1. Base URL set karna (Production & Development)
 const api = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    // Production mein window.location.origin use hoga (same domain)
+    // Development mein localhost:3000 use hoga
+    baseURL: import.meta.env.DEV ? 'http://localhost:3000/api' : '/api',
 });
 
 // 2. REQUEST INTERCEPTOR (The Security Guard) 🛡️

@@ -137,3 +137,31 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# ==========================================
+# AstraPanel Specific Ignores
+# ==========================================
+
+# Build Output (Frontend)
+client/dist/
+client/build/
+
+# Hosted Sites Data (Too large & sensitive for Git)
+server/hosted_sites/*/logs/*
+server/hosted_sites/*/backups/*
+server/hosted_sites/*/ssl/*
+
+# Database Files
+*.sqlite
+*.db
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
