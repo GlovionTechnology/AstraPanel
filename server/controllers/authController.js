@@ -2,7 +2,8 @@ const db = require('../config/database');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const SECRET_KEY = "HiteshBhaiKaSuperSecretKey"; 
+// Use environment variable for production, fallback for development
+const SECRET_KEY = process.env.JWT_SECRET || "DevFallbackSecret_ChangeInProduction"; 
 
 exports.login = (req, res) => {
     const { username, password } = req.body;

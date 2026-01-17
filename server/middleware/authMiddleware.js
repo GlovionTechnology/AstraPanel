@@ -1,7 +1,8 @@
 // File: server/middleware/authMiddleware.js
 const jwt = require('jsonwebtoken');
 
-const SECRET_KEY = "HiteshBhaiKaSuperSecretKey"; // Use env variable in production
+// Use environment variable for production, fallback for development
+const SECRET_KEY = process.env.JWT_SECRET || "DevFallbackSecret_ChangeInProduction";
 
 const verifyToken = (req, res, next) => {
     const bearerHeader = req.headers['authorization'];

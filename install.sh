@@ -95,6 +95,22 @@ echo "📦 Initializing Database..."
 cd $INSTALL_DIR/server
 sudo node init-db.js
 
+# Environment Variables Setup
+echo "🔐 Generating Security Keys..."
+
+# Generate strong random JWT secret
+JWT_SECRET=$(openssl rand -base64 32)
+
+# Create .env file
+cat > $INSTALL_DIR/server/.env <<EOF
+# AstraPanel Environment Variables
+# Auto-generated during installation
+PORT=3000
+NODE_ENV=production
+JWT_SECRET=$JWT_SECRET
+EOF
+
+echo "✅ Security Keys Configured"
 echo "✅ Dependencies Installed & Frontend Built"
 echo ""
 
