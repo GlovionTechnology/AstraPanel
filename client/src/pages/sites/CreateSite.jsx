@@ -2,12 +2,24 @@ import Layout from '../../components/Layout';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useCreateSite } from '../../hooks/useSites';
-import { AlertCircle, CheckCircle, Loader2, Plus, ArrowLeft, RefreshCw, Eye, EyeOff } from 'lucide-react';
+import { useSiteManager } from '../../hooks/useSiteManager';
+import { AlertCircle, CheckCircle, Loader2, Plus, ArrowLeft, RefreshCw, Eye, EyeOff, Globe } from 'lucide-react';
 
 const CreateSite = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const siteType = searchParams.get('type') || 'php';
+    
+    // 🧠 Initialize Brain-powered Site Manager
+    const licenseKey = localStorage.getItem('licenseKey') || 'ASTRA-DEMO-KEY1-KEY2-KEY3';
+    const { 
+        createSite: createViaBrain, 
+        installSSL, 
+        loading: brainLoading 
+    } = useSiteManager(licenseKey);
+    
+    const [useBrainMode, setUseBrainMode] = useState(true); // Toggle Brain vs traditional
+    const [brainStep, setBrainStep] = useState('idle'); // idle, creating, ssl, done
     
     const [formData, setFormData] = useState({
         domain_name: '',
@@ -73,6 +85,31 @@ const CreateSite = () => {
         e.preventDefault();
         
         try {
+            // 🧠 If Brain mode is enabled, use Brain API
+            if (useBrainMode && formData.app_type === 'PHP') {
+                console.log('🧠 Using Brain API for site creation...');
+                setBrainStep('creating');
+                
+                // Create site via Brain (encrypted code execution)
+                await createViaBrain(formData.domain_name, formData.version);
+                
+                // Install SSL if needed
+                if (formData.admin_email) {
+                    setBrainStep('ssl');
+                    await installSSL(formData.domain_name, formData.admin_email);
+                }
+                
+                setBrainStep('done');
+                
+                // Success: Navigate back
+                setTimeout(() => {
+                    navigate('/sites');
+                }, 1500);
+                
+                return;
+            }
+            
+            // Traditional method (existing code)
             await createSite.mutateAsync({
                 domain_name: formData.domain_name,
                 app_type: formData.app_type,
@@ -120,6 +157,49 @@ const CreateSite = () => {
                     <p className="text-gray-400 mb-6">
                         Configure your new {formData.app_type} application
                     </p>
+
+                    {/* 🧠 Brain Mode Toggle */}
+                    {formData.app_type === 'PHP' && (
+                        <div className="mb-6 p-4 bg-brand-500/10 border border-brand-500/20 rounded-lg">
+                            <div className="flex items-start gap-3">
+                                <input
+                                    type="checkbox"
+                                    id="useBrainMode"
+                                    checked={useBrainMode}
+                                    onChange={(e) => setUseBrainMode(e.target.checked)}
+                                    className="mt-1"
+                                />
+                                <div className="flex-1">
+                                    <label htmlFor="useBrainMode" className="font-medium text-white cursor-pointer flex items-center gap-2">
+                                        <Globe size={16} className="text-brand-400" />
+                                        Use Brain API (Recommended)
+                                    </label>
+                                    <p className="text-sm text-gray-400 mt-1">
+                                        🧠 Code executes in RAM only • 🔐 AES-256 encrypted • ⚡ ~200ms response time
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* 🧠 Brain Mode Progress */}
+                    {useBrainMode && brainLoading && (
+                        <div className="mb-6 p-4 bg-brand-500/10 border border-brand-500/20 rounded-lg">
+                            <div className="flex items-center gap-3">
+                                <Loader2 className="text-brand-500 animate-spin" size={20} />
+                                <div>
+                                    <p className="font-medium text-white">
+                                        {brainStep === 'creating' && '🧠 Creating site via Brain API...'}
+                                        {brainStep === 'ssl' && '🔒 Installing SSL certificate...'}
+                                        {brainStep === 'done' && '✅ Site created successfully!'}
+                                    </p>
+                                    <p className="text-sm text-gray-400 mt-1">
+                                        Encrypted code streaming from Brain • Executing in RAM
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     {/* Form */}
                     <form onSubmit={handleSubmit} className="space-y-5">
